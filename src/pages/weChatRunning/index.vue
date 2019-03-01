@@ -1,28 +1,28 @@
 <template>
   <div id=weChatRunning :style="getWindow" >
-    <img :src="bg" style="width:100%;height:100%;position:absolute;z-index:-1">
-    <div style="color:#fff;width:100%;height:40px;line-height:40px;text-align:center;border-bottom:1px solid #AFAFAF" @click="getRunningStep">步数排行榜</div>
+    <!-- <img :src="bg" style="width:100%;height:100%;position:absolute;z-index:-1"> -->
+    <div style="color:#AFAFAF;width:100%;height:40px;line-height:40px;text-align:center;border-bottom:1px solid #AFAFAF" @click="getRunningStep">步数排行榜</div>
     <div style="display:flex;padding:5px;border-bottom:1px solid #AFAFAF">
-      <div style="width:50%;height:10px;line-height:10px;color:#fff;text-align:center">时间</div>
-      <div style="width:50%;height:10px;line-height:10px;color:#fff;text-align:center">步数</div>
+      <div style="width:50%;height:10px;line-height:10px;color:#AFAFAF;text-align:center">时间</div>
+      <div style="width:50%;height:10px;line-height:10px;color:#AFAFAF;text-align:center">步数</div>
     </div>
     <ul>
-      <li v-for="(item,idx) in steps" :key="idx" style="display:flex;color:#fff;text-align:center">
-        <div style="width:50%;height:30px;line-height:30px;color:#fff;text-align:center;border-bottom:1px solid #AFAFAF">{{item.timestamp}}</div>
-        <div style="width:50%;height:30px;line-height:30px;color:#fff;text-align:center;border-bottom:1px solid #AFAFAF">{{item.step}}</div>
+      <li v-for="(item,idx) in steps" :key="idx" style="display:flex;color:#AFAFAF;text-align:center">
+        <div style="width:50%;height:30px;line-height:30px;color:#AFAFAF;text-align:center;border-bottom:1px solid #AFAFAF">{{item.timestamp}}</div>
+        <div style="width:50%;height:30px;line-height:30px;color:#AFAFAF;text-align:center;border-bottom:1px solid #AFAFAF">{{item.step}}</div>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import bg from "../../images/bg750.png";
+// import bg from "../../images/bg750.png";
 var WXBizDataCrypt = require("./WXBizDataCrypt");
 
 export default {
   data() {
     return {
-      bg,
+      // bg,
       getWindow: "",
       steps: []
     };
@@ -87,14 +87,15 @@ export default {
       });
     },
     handleStep(data) {
+      var handledata = data.reverse();
+      console.log(handledata);
       for (var i = 0; i < 1; i++) {
-        console.log(data[20].timestamp);
-        var time = new Date(data[30].timestamp);
+        var time = new Date(handledata[0].timestamp*1000);
         var date =
           time.getFullYear() +
           "年" +
-          time.getMonth() +
-          1 +
+          (time.getMonth() +
+          1) +
           "月" +
           time.getDate() +
           "日";
