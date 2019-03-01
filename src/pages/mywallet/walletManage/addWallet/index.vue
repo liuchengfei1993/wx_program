@@ -13,7 +13,7 @@
          <input type="password" placeholder="请确认交易密码" style="background-color:#44546D;width:80%;height:30px;border-radius:4px;margin:15px;" />
         </div>
         <div v-show="selectImportType===2" style="position:relative;margin:0.4rem 0;color:#768db0;;overflow:hidden;" >
-          <input type="file"  @click="readFile" placeholder="请导入weidex文件" style="background-color:#44546D;width:80%;height:30px;border-radius:4px;margin:15px" />
+          <div @click="readFile" style="background-color:#44546D;width:80%;height:30px;line-height:30px;border-radius:4px;margin:15px">请导入weidex文件</div>
         </div>
          <ul style="color:#fff;font-size:12px;">
             <li><img :src="tipsIcon" style="width:10px;height:10px">温馨提示</li>
@@ -47,26 +47,26 @@ export default {
     var that = this;
     let res = wx.getSystemInfoSync().windowHeight;
     that.windowHeight = "height:" + res + "px;";
-    console.log(that.windowHeight)
   },
   methods: {
-    add() {
-      wx.getSystemInfoSync({
-        success(res) {
-          console.log(res.windowHeight)
-        }
-      });
-    },
     background_color() {},
     //读取文件
     readFile(e) {
       var that = this;
-      wx.chooseMessageFile({
+      wx.chooseImage({
         count: 1,
-        type: "image",
+        sourceType: ['album', 'camera'],
         success(res) {
           that.path = res.tempFiles[0].path;
           console.log(that.path)
+          var fs = wx.getFileSystemManager() 
+          fs.readFile({
+            encoding:"base64",
+            filePath:that.path,
+            success(res){
+              console.log(res);
+            }
+          })
         }
       })
     },
